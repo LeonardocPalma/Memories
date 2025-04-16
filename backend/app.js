@@ -10,8 +10,12 @@ app.use(express.static("public"));
 
 require("./db/conn");
 
-const port = 3000
+const port = 3000;
+
+const memoryRoutes = require("./routes");
+
+app.use("/memories", memoryRoutes);
 
 app.listen(port, async () => {
-    console.log(`O servidor inicio na porta: ${port}`);
+  console.log(`O servidor inicio na porta: ${port}`);
 });
