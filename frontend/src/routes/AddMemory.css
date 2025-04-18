@@ -1,0 +1,31 @@
+.add-memory-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.add-memory-page h2 {
+  color: #1146a6;
+  padding: 2rem 0 1rem;
+  text-align: center;
+}
+
+.add-memory-page form {
+  min-width: 500px;
+}
+
+.add-memory-page p {
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 0.4rem;
+}
+
+.add-memory-page textarea {
+  height: 100px;
+}
+
+.add-memory-page input[type="file"] {
+  margin-bottom: 1rem;
+}
