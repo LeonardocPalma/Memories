@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const Schema = mongoose.Schema;
 
 const commentSchema = new Schema({
@@ -32,9 +31,7 @@ const MemorySchema = new Schema(
     },
     comments: [commentSchema],
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
-module.export = mongoose.model("Memory", MemorySchema);
+module.exports = mongoose.model("Memory", MemorySchema);
