@@ -80,9 +80,105 @@ const deleteMemory = async (req, res) => {
   }
 };
 
+const updateMemory = async (req, res) => {
+  try {
+    const { title, description } = req.body;
+
+    let src = null;
+
+    if (req.file) {
+      src = `image/${req.file.filename}`;
+    }
+
+    const memory = await Memory.findById(req.params.id);
+
+    if (!memory) {
+      return res.status(404).json({ msg: "Memoria não encontrada" });
+    }
+
+    if (src) {
+      removeOldImage(memory);
+    }
+
+    const updateDate = {};
+
+    if (title) {
+      updateDate.title = title;
+    }
+
+    if (description) {
+      updateDate.description = description;
+    }
+
+    if (src) {
+      updateDate.src = src;
+    }
+
+    const updateMemory = await Memory.findByIdAndUpdate(
+      req.params.id,
+      updateDate,
+      { new: true }
+    );
+
+    res.json({ msg: "Memoria atualizada com sucesso!", updateMemory });
+  } catch (error) {}
+};
+
+const toggleFavorite = async (req, res) => {
+  try {
+    const memory = await Memory.findById(req.params.id);
+
+    if (!memory) {
+      return res.status(404).json({ msg: "Memoria não encontrada" });
+    }
+
+    memory.favorite = !memory.favorite;
+    await memory.save();
+
+    res.json({ msg: "Adicionada aos favoritos!", memory });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+};
+
+const addComment = async (req, res) => {
+  try {
+    const { name, text } = req.body;
+
+    if (!name || !text) {
+      return res
+        .status(400)
+        .json({ msg: "Por favor, preencha todos os campos." });
+    }
+
+    const comment = {
+      name,
+      text,
+    };
+
+    const memory = await Memory.findById(req.params.id);
+
+    if (!memory) {
+      return res.status(404).json({ msg: "Memoria não encontrada" });
+    }
+
+    memory.comments.push(comment);
+    await memory.save();
+
+    res.json({ msg: "Comentário adicionado com sucesso!", memory });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+};
+
 module.exports = {
   createMemory,
   getMemories,
   getMemory,
   deleteMemory,
+  updateMemory,
+  toggleFavorite,
+  addComment,
 };
