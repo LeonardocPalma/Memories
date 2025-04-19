@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.jsx";
 import AddMemory from "./routes/AddMemory.jsx";
 import Home from "./routes/Home.jsx";
+import Memory from "./routes/Memory.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/add-memory",
         element: <AddMemory />,
+      },
+      {
+        path: "/memories/:id",
+        element: <Memory />,
       },
     ],
   },
